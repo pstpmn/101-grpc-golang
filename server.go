@@ -4,6 +4,7 @@ import (
 	"101-grpc-golang/hello"
 	"context"
 	"fmt"
+	"google.golang.org/grpc/metadata"
 	"log"
 	"net"
 
@@ -13,6 +14,9 @@ import (
 type helloServer struct{}
 
 func (hs *helloServer) Say(ctx context.Context, in *hello.SayRequest) (*hello.SayResponse, error) {
+	headers, ok := metadata.FromIncomingContext(ctx)
+	log.Println(headers, ok)
+	log.Println(ctx)
 	return &hello.SayResponse{Message: fmt.Sprintf("Hello %s eiei", in.Name)}, nil
 }
 
